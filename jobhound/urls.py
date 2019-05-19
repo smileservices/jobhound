@@ -24,6 +24,7 @@ router.register('jobs', JobViewSet, base_name='jobs')
 # Registration & Login
 urlpatterns = [
     path('api_user/', include('api_user.urls')),
+    path('api_key/', include('api_key.urls')),
 ]
 
 urlpatterns += router.urls

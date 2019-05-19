@@ -13,12 +13,11 @@ class ApiUserSignupForm(UserCreationForm):
 class ApiUserUpdateForm(UserChangeForm):
     class Meta:
         model = ApiUser
-        fields = ('username', 'email', 'api_key')
+        fields = ('username', 'email')
 
         def __init__(self):
             self.helper = FormHelper()
             self.helper.layout = Layout(
                 'username',
                 'email',
-                Field('api_key', readonly=True)
             )

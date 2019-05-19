@@ -40,6 +40,7 @@ ALLOWED_HOSTS = env.str('ALLOWED_HOSTS')
 
 INSTALLED_APPS = [
     'api_user',
+    'api_key',
     'crispy_forms',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -64,7 +65,7 @@ ROOT_URLCONF = 'jobhound.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')]
+        'DIRS': [os.path.join(BASE_DIR, 'templates'), 'api_user']
         ,
         'APP_DIRS': True,
         'OPTIONS': {
