@@ -21,8 +21,13 @@
                 {{ form_field|as_crispy_field }}
                 {% endif %}
             {% endfor %}
+            <div class="control-group">
+            <label for="">Key</label>
+            <div class="alert alert-info">{{ object.apikey_set.first.api_key }}
+            </div>
+            </div>
             <p><a href="{% url 'api_user-password' %}">Change password</a></p>
-            <p><a href="{% url 'api_key_update' %}">API Key</a></p>
+            <p><a href="{% url 'api_key_update' %}">New API Key</a></p>
             <button type="submit" class="btn btn-primary">Save</button>
             </div>
         </div>
