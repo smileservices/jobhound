@@ -1,0 +1,12 @@
+.buttonHolder .btn {
+    margin-right: 30px;
+}
+
+.buttonHolder .btn:last-child {
+    margin-right: 0px;
+}
+
+
+.full-width {
+    width: 100% !important;
+}

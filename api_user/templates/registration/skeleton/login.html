@@ -1,0 +1,40 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+    <head>
+    {% include 'registration/skeleton/head.html' %}
+    </head>
+
+    <body>
+
+        <div class="wrapper-page">
+        
+            {% block logo %}
+                <div class="text-center">
+                    <a class="logo-lg"><i class="mdi mdi-radar"></i> <span>Minton</span> </a>
+                </div>
+            {% endblock %}
+
+            {% block content %}
+            {% endblock %}
+
+        </div>
+        <!-- end wrapper -->
+
+        <script src="{% static 'api_user/js/jquery.min.js' %}"></script>
+        <script src="{% static 'api_user/js/popper.min.js' %}"></script><!-- Popper for Bootstrap -->
+        <script src="{% static 'api_user/js/bootstrap.min.js' %}"></script>
+        <script src="{% static 'api_user/js/detect.js' %}"></script>
+        <script src="{% static 'api_user/js/fastclick.js' %}"></script>
+        <script src="{% static 'api_user/js/jquery.slimscroll.js' %}"></script>
+        <script src="{% static 'api_user/js/jquery.blockUI.js' %}"></script>
+        <script src="{% static 'api_user/js/waves.js' %}"></script>
+        <script src="{% static 'api_user/js/wow.min.js' %}"></script>
+        <script src="{% static 'api_user/js/jquery.nicescroll.js' %}"></script>
+        <script src="{% static 'api_user/js/jquery.scrollTo.min.js' %}"></script>
+        <script src="{% static 'api_user/plugins/switchery/switchery.min.js' %}"></script>
+        {% block extra_js %}{% endblock %}
+    </body>
+</html>

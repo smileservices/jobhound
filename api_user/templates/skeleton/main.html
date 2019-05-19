@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+    {% include 'skeleton/head.html' %}
+    </head>
+
+    <body class="fixed-left">
+
+        <div class="wrapper">
+            {% include 'skeleton/topbar.html' %}
+            {% include 'skeleton/nav.html' %}
+            <div class="content-page">
+                <div class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            {% block title_header %}{% endblock %}
+                        </div>
+                    </div>
+                    {% block content %}{% endblock %}
+                </div>
+                </div>
+            </div>
+        </div>
+
+        {% include 'skeleton/footer.html' %}
+        {% block extra_js %}{% endblock %}
+
+
+    </body>
+</html>
