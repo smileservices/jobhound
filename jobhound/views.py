@@ -25,7 +25,7 @@ class JobViewSet(viewsets.ViewSet):
             )
         else:
             records = el_int.latest(size)
-            serializer = JobSuggestSerializer(
+            serializer = JobSerializer(
                 instance=records,
                 many=True
             )

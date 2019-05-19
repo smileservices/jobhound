@@ -1,4 +1,5 @@
 from elasticsearch import Elasticsearch
+from jobhound.exceptions import NoIndicesFound
 
 
 class ElasticInterface:
@@ -7,8 +8,10 @@ class ElasticInterface:
         self.es = Elasticsearch()
         self.indexes = []
         for idx in self.es.indices.get_alias():
-            if suffix == idx[-len(idx):]:
+            if suffix == idx[-len(suffix):]:
                 self.indexes.append(idx)
+        if len(self.indexes) == 0:
+            raise NoIndicesFound
 
     def search(self, term, size=10):
         q = {
@@ -45,8 +48,7 @@ class ElasticInterface:
         q = {
             "sort": [
                 {"date": {"order": "asc", "missing": "_last", "unmapped_type": "long"}},
-            ],
-            "query": {}
+            ]
         }
         res = self.es.search(self.indexes, body=q, size=size)
         return self.extract_results(res, 'search')

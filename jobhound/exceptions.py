@@ -1,0 +1,2 @@
+class NoIndicesFound(Exception):
+    pass

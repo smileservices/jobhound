@@ -25,3 +25,5 @@ router.register('jobs', JobViewSet, base_name='jobs')
 urlpatterns = [
     path('api_user/', include('api_user.urls')),
 ]
+
+urlpatterns += router.urls
