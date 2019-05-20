@@ -7,12 +7,13 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.views import PasswordChangeView
 from api_user.mixins import LoginRequiredMixin
 
-
 import logging
 
 from api_user.models import ApiUser
 from api_user.forms import ApiUserSignupForm, ApiUserUpdateForm
 from api_user.decorators import check_recaptcha
+
+from api_key.models import APIKey
 
 main_logger = logging.getLogger('main')
 
@@ -42,7 +43,7 @@ class ProfileUpdate(LoginRequiredMixin, UpdateView):
     template_name = 'dashboard/account.html'
     form_class = ApiUserUpdateForm
     login_url = 'api_user-login'
-    
+
     def get_object(self, queryset=None):
         return self.model.objects.get(user_ptr_id=self.request.user.id)
 
@@ -66,7 +67,8 @@ class ProfileUpdate(LoginRequiredMixin, UpdateView):
             'bc2': 'Update',
         }
         return context
-    
+
+
 class UpdatePassword(LoginRequiredMixin, PasswordChangeView):
     model = ApiUser
     template_name = 'dashboard/form.html'
@@ -79,3 +81,18 @@ class UpdatePassword(LoginRequiredMixin, PasswordChangeView):
             'bc2': 'Password',
         }
         return context
+
+
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
+
+@receiver(post_save, sender=ApiUser)
+def new_api_user(sender, **kwargs):
+    api_user = kwargs['instance']
+    if kwargs['created']:
+        new_api_key = APIKey(
+            user=api_user
+        )
+        new_api_key.api_key = new_api_key.generate_key()
+        new_api_key.save()
