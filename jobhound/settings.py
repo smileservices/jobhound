@@ -41,13 +41,15 @@ ALLOWED_HOSTS = env.str('ALLOWED_HOSTS')
 INSTALLED_APPS = [
     'api_user',
     'api_key',
+
     'crispy_forms',
+    'rest_framework',
+
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -112,11 +114,18 @@ if env.bool('DEBUG'):
     AUTH_PASSWORD_VALIDATORS = []
 
 REST_FRAMEWORK = {
-    # Use Django's standard `django.contrib.auth` permissions,
-    # or allow read-only access for unauthenticated users.
-    # 'DEFAULT_PERMISSION_CLASSES': [
-    #     'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-    # ]
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
+        'api_key.authentication.ApiKeyAuthentication',
+    ),
+    'DEFAULT_THROTTLE_CLASSES': (
+        'rest_framework.throttling.AnonRateThrottle',
+        'rest_framework.throttling.UserRateThrottle'
+    ),
+    'DEFAULT_THROTTLE_RATES': {
+        'anon': '5/day',
+        'user': '1000/day'
+    }
 }
 
 

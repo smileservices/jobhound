@@ -1,5 +1,6 @@
 from rest_framework import viewsets, response
 from rest_framework.generics import ListAPIView
+from rest_framework.permissions import IsAuthenticated
 
 from jobhound.retrieve.elastic import ElasticInterface
 from jobhound.rest.serializers import JobSerializer, JobSuggestSerializer
@@ -7,7 +8,8 @@ from jobhound.rest.serializers import JobSerializer, JobSuggestSerializer
 
 class JobViewSet(viewsets.ViewSet):
     serializer_class = JobSerializer
-
+    permission_classes = (IsAuthenticated,)
+    
     def list(self, request):
         el_int = ElasticInterface('_job')
         size = request.query_params.get('size')

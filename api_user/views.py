@@ -1,3 +1,5 @@
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.shortcuts import render
 
 # Create your views here.
@@ -83,16 +85,12 @@ class UpdatePassword(LoginRequiredMixin, PasswordChangeView):
         return context
 
 
-from django.db.models.signals import post_save
-from django.dispatch import receiver
-
-
 @receiver(post_save, sender=ApiUser)
 def new_api_user(sender, **kwargs):
     api_user = kwargs['instance']
     if kwargs['created']:
         new_api_key = APIKey(
-            user=api_user
+            user=api_user,
+            api_key=APIKey.generate_key()
         )
-        new_api_key.api_key = new_api_key.generate_key()
         new_api_key.save()
