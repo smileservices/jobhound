@@ -1,4 +1,6 @@
 # Todo
 
-- add throttle and key/user auth
-- webhooks?
+- implement async crawling
+    - better error handling
+    - testing?
+- implement workers to process crawling results

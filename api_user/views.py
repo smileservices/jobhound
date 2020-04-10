@@ -21,15 +21,16 @@ main_logger = logging.getLogger('main')
 
 
 class RegisterView(CreateView):
-    # model = Supplier
+    model = ApiUser
     form_class = ApiUserSignupForm
-    success_url = reverse_lazy('login')
+    success_url = reverse_lazy('api_user-login')
     template_name = 'registration/signup.html'
 
-    @method_decorator(check_recaptcha)
+    # @method_decorator(check_recaptcha)
     def post(self, request, *args, **kwargs):
         form = self.get_form()
-        if form.is_valid() and request.recaptcha_valid:
+        # if form.is_valid() and request.recaptcha_valid:
+        if form.is_valid(): #for debugging
             main_logger.info('api user registered account..')
             return self.form_valid(form)
         else:

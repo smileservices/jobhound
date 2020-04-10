@@ -19,7 +19,7 @@ from rest_framework import routers
 from jobhound.views import JobViewSet
 
 router = routers.DefaultRouter()
-router.register('jobs', JobViewSet, base_name='jobs')
+router.register('jobs', JobViewSet, basename='jobs')
 
 # Registration & Login
 urlpatterns = [

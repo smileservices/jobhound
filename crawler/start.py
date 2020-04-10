@@ -12,7 +12,7 @@ env = environ.Env(
     DEBUG=(bool, False)
 )
 # reading .env file
-environ.Env.read_env('../.env')
+environ.Env.read_env('.env')
 
 create_logger('crawler', env.str('CRAWLER_LOG'), logging.DEBUG)
 logger = logging.getLogger('crawler')

@@ -1,12 +1,12 @@
-from bs4 import BeautifulSoup
 import re
 import traceback
+from bs4 import BeautifulSoup
 
 from core.custom_exceptions import ResourceUnavailable, ParsingElementNotFound
-from core.abstract_bowl import AbstractBowl
+from core.async_abstract_bowl import AsyncAbstractBowl
 
 
-class TruelancerBowl(AbstractBowl):
+class AsyncTruelancerBowl(AsyncAbstractBowl):
     default_pages = 4
     list_url_template = 'https://www.truelancer.com/freelance-jobs?sort=latest&page={}'
     doc_type = 'job'
@@ -35,36 +35,36 @@ class TruelancerBowl(AbstractBowl):
 
         return mappings
 
-    def get_links(self):
+    async def get_links(self):
         self.logger.info('Getting links ...')
 
-        def get_pages(n):
+        async def get_pages(n):
             list_url_template = self.list_url_template
             go_on = True
             i = 1
             while go_on and i <= n:
-                page = self.session_obj.get(list_url_template.format(i), (2, 7))
-                page_bs = BeautifulSoup(page.text, 'html.parser')
+                page_text = await self.session_obj.get(list_url_template.format(i), (2, 7))
+                page_bs = BeautifulSoup(page_text, 'html.parser')
                 if page_bs.find_all('h1', text='No Record Found'):
                     go_on = False
                 yield page_bs
                 i += 1
 
-        for page_soup in get_pages(n=self.default_pages):
+        async for page_soup in get_pages(n=self.default_pages):
             for link in page_soup.find_all(href=re.compile('https://www.truelancer.com/freelance-project/')):
                 if self.storage_object.record_exists('links_crawled', 'url', link['href']):
                     self.logger.info('{} already visited. Ending link aquisition.'.format(link['href']))
                     return
                 self.curent_links.append(link['href'])
 
-    def parse_page(self, url):
+    async def parse_page(self, url):
         self.curent_parse_error = False
         job = {
             'poster': {}
         }
         self.logger.info('Sending request for url {}'.format(url))
-        page = self.session_obj.get(url, (2, 5))
-        page_bs = BeautifulSoup(page.text, 'html.parser')
+        page = await self.session_obj.get(url, (2, 5))
+        page_bs = BeautifulSoup(page, 'html.parser')
 
         try:
             self.logger.info('Parsing...')
@@ -109,3 +109,4 @@ class TruelancerBowl(AbstractBowl):
             self.register_parse_error()
 
         return job
+        
