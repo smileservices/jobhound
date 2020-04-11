@@ -9,7 +9,7 @@ from storage.elasticsearch import ElasticSearchStorage
 
 env = environ.Env(
     # set casting, default value
-    DEBUG=(bool, False)
+    DEBUG=(bool, False),
 )
 # reading .env file
 environ.Env.read_env('.env')

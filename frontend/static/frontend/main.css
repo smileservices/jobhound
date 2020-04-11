@@ -1,0 +1,134 @@
+.authentication {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 30em;
+}
+
+.authentication h1  {
+    font-size: 30px;
+}
+
+.authentication .socialaccount_providers {
+    list-style-type: none;
+}
+
+.authentication .socialaccount_providers li {
+    display: inline-block;
+    background-color: #c6c6c6;
+    padding: 5px;
+}
+
+.authentication .socialaccount_providers li:hover {
+    background-color: #f1f1f1;
+}
+
+.authentication ul.errorlist.nonfield {
+    list-style-type: none;
+    padding: 12px;
+    background-color: #ffdede;
+}
+
+.navigation {
+    background-color: lightgrey;
+    padding: 15px;
+    margin-bottom: 35px;
+}
+.navigation h1 {
+    display: inline-block;
+    margin: 0;
+}
+
+.navigation .auth {
+    display: inline-block;
+    float: right;
+}
+
+.main-header {
+    font-size: 35px;
+    margin-bottom: 35px;
+    margin-top: 35px;
+    text-align: center;
+}
+
+
+.support-panel {
+    width: 200px;
+    margin: 5px;
+    margin-bottom: 20px;
+}
+
+.support-panel .support-image {
+    width: 160px;
+}
+
+.support-panel .body {
+    position: relative;
+}
+
+.support-panel .body .overlay {
+    display: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+.support-panel .body:hover .overlay {
+    display: block;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.support-panel .body .overlay .content {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    text-align: center;
+}
+
+.support-panel .body .overlay .content span {
+    margin-right: 10px;
+    padding: 5px;
+    background-color: #e3e3e3;
+}
+
+.support-panel .body .overlay .content span:last-child {
+    margin-right: 0;
+}
+.support-panel .header p {
+    margin-bottom: 3px;
+}
+.support-panel .support-name {
+    font-size: 14px;
+    overflow-y: hidden;
+}
+
+.form-container {
+    float: left;
+    width: 30%;
+}
+
+.images-container {
+    float: right;
+    width: 70%;
+}
+.image-form {
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 30em;
+}
+
+.image-form .buttons {
+    display: block;
+    float: right;
+    margin-top: 15px;
+}
+
+.image-form .buttons input {
+    margin-right: 15px;
+}
+
+.image-form .buttons input:last-child {
+    margin-right: 0;
+}

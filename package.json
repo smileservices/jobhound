@@ -1,0 +1,33 @@
+{
+  "name": "jobhound",
+  "version": "1.0.0",
+  "description": "- Install package depedencies\r ```\r     pip install -r requirements\r ```\r - Make db migrations\r ```\r     python manage.py makemigrations\r     python manage.py migrate\r ```",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack --mode development",
+    "prod": "webpack --mode production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smileservices/jobhound.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/smileservices/jobhound/issues"
+  },
+  "homepage": "https://github.com/smileservices/jobhound#readme",
+  "devDependencies": {
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.9.5",
+    "@babel/preset-react": "^7.9.4",
+    "babel-loader": "^8.1.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "prop-types": "^15.7.2",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11"
+  }
+}
