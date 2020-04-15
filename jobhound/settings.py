@@ -127,7 +127,12 @@ REST_FRAMEWORK = {
     'DEFAULT_THROTTLE_RATES': {
         'anon': env.str('THROTTLE_ANON'),
         'user': env.str('THROTTLE_USER')
-    }
+    },
+}
+
+
+ELASTICSEARCH = {
+    'PAGE_SIZE': 10
 }
 
 

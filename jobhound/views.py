@@ -1,5 +1,4 @@
 from rest_framework import viewsets, response
-from rest_framework.generics import ListAPIView
 from rest_framework.permissions import IsAuthenticated
 
 from jobhound.retrieve.elastic import ElasticInterface
@@ -12,23 +11,26 @@ class JobViewSet(viewsets.ViewSet):
     
     def list(self, request):
         el_int = ElasticInterface('_job')
-        size = request.query_params.get('size')
-        if 'term' in request.query_params:
-            records = el_int.search(request.query_params['term'], size)
-            serializer = JobSerializer(
-                instance=records,
-                many=True
-            )
-        elif 'prefix' in request.query_params:
+        page = int (request.query_params['page'] if 'page' in request.query_params else 0)
+        if 'prefix' in request.query_params:
             records = el_int.suggest(request.query_params['prefix'])
             serializer = JobSuggestSerializer(
                 instance=records,
                 many=True
             )
+            data = serializer.data
         else:
-            records = el_int.latest(size)
-            serializer = JobSerializer(
-                instance=records,
+            if 'term' in request.query_params:
+                result = el_int.search(request.query_params['term'], page)
+            else:
+                result = el_int.latest(page)
+            serialized_items = JobSerializer(
+                instance=result['items'],
                 many=True
             )
-        return response.Response(serializer.data)
+            data = {
+                'items': serialized_items.data,
+                'stats': result['stats']
+            }
+
+        return response.Response(data)
