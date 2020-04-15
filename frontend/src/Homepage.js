@@ -2,7 +2,6 @@ import React, {useState, useEffect, useLayoutEffect, useRef} from "react";
 import ReactDOM from "react-dom";
 import {makeId, debounce} from "./utils";
 
-
 const routes = {
     jobs: 'jobs'
 };
@@ -53,8 +52,6 @@ const Search = ({setSearchTerm, setJobs, setJobsPage}) => {
 };
 
 
-
-
 let firstRun = true;
 
 
@@ -75,10 +72,15 @@ function App() {
         const fetchJobs = async () => {
             fetch(url).then(response => {
                 if (response.status !== 200) {
-                    console.log('Error!')
+                    setLoadMoreJobs({
+                        ...global_loadMoreJobs,
+                        top_message: response.status === 403 ? 'Please log in!' : 'Error with status '+response.status
+                    });
+                    return false;
                 }
                 return response.json();
             }).then(data => {
+                if (!data) return false;
                 global_loadMoreJobs = {
                     'is_loading': false,
                     'has_more': data.stats.count === data.stats.page_size,
@@ -104,7 +106,6 @@ function App() {
         if (window.innerHeight + document.body.scrollTop - document.documentElement.offsetHeight >= -20) {
             // initiate request for load more
             if (global_loadMoreJobs.has_more && !global_loadMoreJobs.is_loading) {
-                console.log('loading more jobs...');
                 global_loadMoreJobs = {
                     ...global_loadMoreJobs,
                     'is_loading': true,
@@ -122,7 +123,6 @@ function App() {
 
     useLayoutEffect(() => {
         if (!firstRun) {
-            console.log('new page', jobsPage);
             getJobs();
         } else {
             firstRun = false;
@@ -135,7 +135,7 @@ function App() {
             <div className="job-listings">
                 <p>{loadMoreJobs.top_message}</p>
                 {
-                    jobs.map((job, i) => (<JobListing key={makeId(4)} data={job} count={i + 1}/>))
+                    jobs.map((job, i) => (<JobListing key={makeId(8)} data={job} count={i + 1}/>))
                 }
                 <p>{loadMoreJobs.bottom_message}</p>
             </div>
