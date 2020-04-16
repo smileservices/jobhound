@@ -12,24 +12,38 @@ let global_loadMoreJobs = {
     'total': 0
 };
 
-const JobListing = (props) => (
-    <div className="job-panel">
-        <div className="counter">
-            {props.count}
+let firstRun = true;
+
+const JobListing = (props) => {
+    const [showAll, setShowAll] = useState(false);
+    const getPanelClassNames = () => "job-panel" + (showAll ? ' expanded' : '');
+    return (
+        <div className={getPanelClassNames()} onClick={() => setShowAll(showAll => !showAll)}>
+            <div className="counter">
+                {props.count}
+            </div>
+            <div className="content">
+                <div className="header">
+                    <p className="title">{props.data.title}</p>
+                    <p className="date">discovered on {props.data.date}</p>
+                </div>
+                <div className="body">
+                    {showAll
+                        ? <div>
+                            <p>{props.data.description}</p>
+                            <p><a href={props.data.url}>visit link</a></p>
+                          </div>
+                        : <p>{props.data.description.slice(0, 150) + '...'}</p>
+                    }
+                </div>
+                <div className="footer">
+                    <p className="location">location: {props.data.location}</p>
+                    <p className="skills">{props.data.skills.map((skill, i) => skill ? (i > 0 ? ', ' + skill : skill) : '')}</p>
+                </div>
+            </div>
         </div>
-        <div className="content">
-            <div className="header">
-                <p className="title">{props.data.title}</p>
-            </div>
-            <div className="body">
-                <p>{props.data.description.slice(0, 150) + '...'}</p>
-            </div>
-            <div className="footer">
-                <p>{props.data.skills.map((skill, i) => skill ? (i > 0 ? ', ' + skill : skill) : '')}</p>
-            </div>
-        </div>
-    </div>
-);
+    );
+};
 
 const Search = ({setSearchTerm, setJobs, setJobsPage}) => {
     const [query, setQuery] = useState('');
@@ -52,21 +66,18 @@ const Search = ({setSearchTerm, setJobs, setJobsPage}) => {
 };
 
 
-let firstRun = true;
-
-
 function App() {
 
     const [jobs, setJobs] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [jobsPage, setJobsPage] = useState(0);
-    // const [firstRun, setFirstRun] = useState(true);
     const [loadMoreJobs, setLoadMoreJobs] = useState(global_loadMoreJobs);
 
     const getJobs = () => {
         let url = routes.jobs + "?page=" + jobsPage + (searchTerm ? "&term=" + searchTerm : '');
         setLoadMoreJobs({
             ...global_loadMoreJobs,
+            top_message: 'Getting new job results ...',
             bottom_message: 'Waiting for results ...'
         });
         const fetchJobs = async () => {
@@ -74,7 +85,7 @@ function App() {
                 if (response.status !== 200) {
                     setLoadMoreJobs({
                         ...global_loadMoreJobs,
-                        top_message: response.status === 403 ? 'Please log in!' : 'Error with status '+response.status
+                        top_message: response.status === 403 ? 'Please log in!' : 'Error with status ' + response.status
                     });
                     return false;
                 }
@@ -94,7 +105,7 @@ function App() {
                 })
             })
         };
-        setTimeout(fetchJobs, 2000);
+        fetchJobs();
     };
 
     useEffect(() => {
@@ -103,7 +114,7 @@ function App() {
 
     const handleScroll = debounce(() => {
         // check if we are at bottom of page
-        if (window.innerHeight + document.body.scrollTop - document.documentElement.offsetHeight >= -20) {
+        if (window.innerHeight + document.body.scrollTop - document.documentElement.offsetHeight >= -650) {
             // initiate request for load more
             if (global_loadMoreJobs.has_more && !global_loadMoreJobs.is_loading) {
                 global_loadMoreJobs = {

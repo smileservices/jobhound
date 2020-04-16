@@ -1,3 +1,12 @@
+body {
+    font-family: Consolas;
+    margin: 0;
+}
+
+.container {
+    padding: 30px;
+}
+
 .authentication {
     margin-left: auto;
     margin-right: auto;
@@ -29,9 +38,11 @@
 }
 
 .navigation {
-    background-color: lightgrey;
-    padding: 15px;
+    background-color: #afc7db;
+    padding: 30px;
     margin-bottom: 35px;
+    color: #3d6484;
+    border-bottom: #3d6484 solid 4px;
 }
 .navigation h1 {
     display: inline-block;
@@ -58,7 +69,11 @@
 
 
 .job-panel {
-    margin: 30px;
+    padding: 30px;
+}
+
+.job-panel.expanded {
+    background-color: #ffffe5;
 }
 
 .job-panel .counter {
@@ -66,28 +81,35 @@
     display: inline-block;
     width: 30px;
     font-size: 14px;
-    color: #8e6e99;
+    color: #3d6484;
 }
 
 .job-panel .content {
     display: inline-block;
+    width: 90%;
+    cursor: pointer;
 }
 
 .job-panel p {
     margin: 0;
+    font-size: 12px;
+}
+
+.job-panel .header{
+    margin-bottom: 10px;
+    color: #3d6484;
 }
 
 .job-panel .header .title {
     font-size: 14px;
-    color: #8e6e99;
     font-weight: bold;
 }
 
 .job-panel .body {
-    font-size: 12px;
-
+    margin-bottom: 10px;
 }
 
-.job-panel .footer {
+.job-panel .footer .skills {
+    color: #3d6484;
     font-size: 10px;
 }

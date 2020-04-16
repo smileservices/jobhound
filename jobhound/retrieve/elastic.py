@@ -58,7 +58,7 @@ class ElasticInterface:
             "from": page_offset,
             "size": page_size,
             "sort": [
-                {"date": {"order": "asc", "missing": "_last", "unmapped_type": "long"}},
+                {"date": {"order": "desc", "missing": "_last", "unmapped_type": "long"}},
             ]
         }
         res = self.es.search(self.indexes, body=q)
