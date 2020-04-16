@@ -1,14 +1,6 @@
-# Readme
+# jobhound
+Job crawler and aggregator
 
-## Deplyoment
+Crawls jobs and indexes them in elasticsearch. Serves API for querying. API access is key based and throttled. No anonymous access. Easily extendable to add more sites to be crawled. 
 
-- Install package depedencies
-```
-    pip install -r requirements
-```
-- Make db migrations
-```
-    python manage.py makemigrations
-    python manage.py migrate
-```
-
+A ReactJs frontend has been added for browsing and searching through the records using the API list endpoint.
